@@ -1,38 +1,57 @@
 class GradeTracker:
-    def _init_(self):
+    def __init__(self):
         self.students = {}
 
     def add_student(self, name):
         if name not in self.students:
             self.students[name] = []
+            print(f"Student {name} added.")
         else:
             print(f"Student {name} already exists.")
 
     def add_grade(self, name, grade):
         if name in self.students:
             self.students[name].append(grade)
+            print(f"Added grade {grade} for {name}.")
         else:
-            print(f"Student {name} not found.")
+            print(f"Student {name} does not exist.")
 
     def calculate_average(self, name):
         if name in self.students and self.students[name]:
-            return sum(self.students[name]) / len(self.students[name])
+            average = sum(self.students[name]) / len(self.students[name])
+            return average
         else:
-            print(f"Student {name} not found or has no grades.")
+            print(f"No grades found for {name}.")
             return None
 
-    def display_grades(self):
-        for name, grades in self.students.items():
-            print(f"Student: {name}, Grades: {grades}, Average: {self.calculate_average(name):.2f}")
+    def display_grades(self, name):
+        if name in self.students:
+            grades = self.students[name]
+            if grades:
+                print(f"Grades for {name}: {grades}")
+            else:
+                print(f"No grades recorded for {name}.")
+        else:
+            print(f"Student {name} does not exist.")
+
+    def display_all(self):
+        for student, grades in self.students.items():
+            print(f"{student}: {grades} | Average: {self.calculate_average(student)}")
+
 
 # Example usage
 tracker = GradeTracker()
 tracker.add_student("Alice")
 tracker.add_student("Bob")
 
-tracker.add_grade("Alice", 90)
 tracker.add_grade("Alice", 85)
-tracker.add_grade("Bob", 78)
-tracker.add_grade("Bob", 82)
+tracker.add_grade("Alice", 90)
+tracker.add_grade("Bob", 75)
 
-tracker.display_grades()
+tracker.display_grades("Alice")
+tracker.display_grades("Bob")
+
+tracker.display_all()
+
+average_alice = tracker.calculate_average("Alice")
+print(f"Alice's average grade: {average_alice}")
