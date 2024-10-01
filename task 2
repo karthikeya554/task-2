@@ -1,0 +1,38 @@
+class GradeTracker:
+    def _init_(self):
+        self.students = {}
+
+    def add_student(self, name):
+        if name not in self.students:
+            self.students[name] = []
+        else:
+            print(f"Student {name} already exists.")
+
+    def add_grade(self, name, grade):
+        if name in self.students:
+            self.students[name].append(grade)
+        else:
+            print(f"Student {name} not found.")
+
+    def calculate_average(self, name):
+        if name in self.students and self.students[name]:
+            return sum(self.students[name]) / len(self.students[name])
+        else:
+            print(f"Student {name} not found or has no grades.")
+            return None
+
+    def display_grades(self):
+        for name, grades in self.students.items():
+            print(f"Student: {name}, Grades: {grades}, Average: {self.calculate_average(name):.2f}")
+
+# Example usage
+tracker = GradeTracker()
+tracker.add_student("Alice")
+tracker.add_student("Bob")
+
+tracker.add_grade("Alice", 90)
+tracker.add_grade("Alice", 85)
+tracker.add_grade("Bob", 78)
+tracker.add_grade("Bob", 82)
+
+tracker.display_grades()
